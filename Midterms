@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KHYLECULATOR</title>
+
+    <!-- TAILWIND IMPLEMENTATION -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- FAVICON IMPLEMENTATION -->
+    <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon" />
+
+</head>
+<!-- HEAD END -->
+
+<!-- BODY START -->
+<body class="w-screen h-screen bg-[#FFF2CC] flex justify-center items-center">
+
+
+<!-- PHP START  -->
+<?php
+        session_start();
+        function input_numbers() {
+            if(isset($_POST['number'])) {
+                $_SESSION['expression'] .= $_POST['number'];
+            }
+        }
+
+        function define_operation() {
+            if(isset($_POST['operation'])) {
+                $_SESSION['operator'] = $_POST['operation'];
+                $_SESSION['value'] = $_SESSION['expression'];
+                $_SESSION['expression'] = '';
+            }
+        }
+
+        function math_operation() {
+            if(isset($_POST['equals'])) {
+                $operation = $_SESSION['operator'];
+                $value = floatval($_SESSION['value']);
+                $expression = floatval($_SESSION['expression']);
+
+                if ($operation === '÷' && $expression == 0) {
+                    $_SESSION['expression'] = 'Undefined';
+                } else {
+                    switch($operation) {
+                        case '+':
+                            $_SESSION['expression'] = $value + $expression;
+                            break;
+                        case '-':
+                            $_SESSION['expression'] = $value - $expression;
+                            break;
+                        case '÷':
+                            $_SESSION['expression'] = $value / $expression;
+                            break;
+                        case 'x':
+                            $_SESSION['expression'] = $value * $expression;
+                            break;
+                    }
+                }
+            }
+        }
+
+        function clear_inputs() {
+            if(isset($_POST['clear'])) {
+                $_SESSION['expression'] = '';
+                $_SESSION['operator'] = 0;
+                $_SESSION['value'] = null;
+            }
+        }
+
+        input_numbers();
+        define_operation();
+        math_operation();
+        clear_inputs();
+
+    ?>
+<!-- PHP END -->
+    <!-- MAIN CONTAINER START -->
+    
+    <div class="flex w-full justify-around items-center">
+    <div class="w-2/5">
+        <h1 class="text-5xl mb-2 font-bold">Dela Cruz, Ryan Khyle N.</h1>  
+        <h1 class="text-3xl font-normal mb-20">BsCpE - 4B</h1>  
+        <h1 class="text-4xl font-light">Midterms in <span class="font-medium">Elective 4</span></h1>
+    </div>
+    <div class="w-[400px] flex justify-center items-center relative">
+    <img class="w-full " src="images/ip14.png" alt="">
+    
+    <!-- CALCU START -->
+    <div class="Main-Container">
+        <!-- DIV CALCU START -->
+        <div id="calculator">
+        <form action="" method="post">
+
+            <!--  -->
+        <div class="absolute left-[5.3%] w-[89.2%] top-[12%] flex items-center justify-center">
+
+        <h1 class="text-3xl italic font-bold text-[#A4907C]">KHYLECULATOR</h1>
+
+        </div>
+        <!--  -->
+
+            <div>
+            <input class="absolute left-[8%] w-[83%] top-[24%] flex items-end justify-end rounded-xl border-2 border-[#FFD966] py-4 px-4 bg-[#FFF2CC] text-4xl text-end font-bold" type="text" name="result" value="<?= !empty($_SESSION['expression']) ?  $_SESSION['expression'] : (!empty($_SESSION['operator']) ? $_SESSION['operator'] : 0)  ?>" readonly>
+            </div>
+
+            <!-- 1ST START  -->
+            <div class="absolute left-[3.3%] w-[89.2%] top-[40%] flex items-center justify-end">
+
+            <input class="mr-[4.5%] w-[20%] bg-[#FFD966] flex justify-center items-center rounded-full py-[2%] outline outline-offset-1 outline-[#FDD36A] text-xl font-medium" type="submit" name="clear" value="AC">
+
+            <input class="w-[20%] bg-[#FFD966] flex justify-center items-center rounded-full py-[2%] outline outline-offset-1 outline-[#FDD36A] text-xl font-medium" type="submit" name="equals" value="=" id="eqlbtn">
+            
+            </div>
+            <!-- 1ST END -->
+
+            <!-- 2ND START  -->
+            <div class="absolute left-[5.5%] w-[89.2%] top-[50%] flex items-center justify-around">
+
+            <input class="w-[20%] bg-[#FFD966] flex justify-center items-center rounded-full py-[2%] outline outline-offset-1 outline-[#FDD36A] text-xl font-medium" type="submit" name="number" value="1">
+
+            <input class="w-[20%] bg-[#FFD966] flex justify-center items-center rounded-full py-[2%] outline outline-offset-1 outline-[#FDD36A] text-xl font-medium" type="submit" name="number" value="2">
+
+            <input class="w-[20%] bg-[#FFD966] flex justify-center items-center rounded-full py-[2%] outline outline-offset-1 outline-[#FDD36A] text-xl font-medium" type="submit" name="number" value="3">
+
+            <input class="w-[20%] bg-[#FFD966] flex justify-center items-center rounded-full py-[2%] outline outline-offset-1 outline-[#FDD36A] text-xl font-medium" type="submit" name="operation" value="÷">
+            
+            </div>
+            <!-- 2ND END -->
+
+            <!-- 3RD START -->
+            <div class="absolute left-[5.5%] w-[89.2%] top-[60%] flex items-center justify-around text-xl font-medium">
+
+            <input class="w-[20%] bg-[#FFD966] flex justify-center items-center rounded-full py-[2%] outline outline-offset-1 outline-[#FDD36A] text-xl font-medium" type="submit" name="number" value="4">
+
+            <input class="w-[20%] bg-[#FFD966] flex justify-center items-center rounded-full py-[2%] outline outline-offset-1 outline-[#FDD36A] text-xl font-medium" type="submit" name="number" value="5">
+
+            <input class="w-[20%] bg-[#FFD966] flex justify-center items-center rounded-full py-[2%] outline outline-offset-1 outline-[#FDD36A] text-xl font-medium" type="submit" name="number" value="6">
+
+            <input class="w-[20%] bg-[#FFD966] flex justify-center items-center rounded-full py-[2%] outline outline-offset-1 outline-[#FDD36A] text-xl font-medium" type="submit" name="operation" value="x">
+            
+            </div>
+            <!-- 3RD END -->
+
+            <!-- 4TH START -->
+            <div class="absolute left-[5.5%] w-[89.2%] top-[70%] flex items-center justify-around">
+
+            <input class="w-[20%] bg-[#FFD966] flex justify-center items-center rounded-full py-[2%] outline outline-offset-1 outline-[#FDD36A] text-xl font-medium" type="submit" name="number" value="7">
+
+            <input class="w-[20%] bg-[#FFD966] flex justify-center items-center rounded-full py-[2%] outline outline-offset-1 outline-[#FDD36A] text-xl font-medium" type="submit" name="number" value="8">
+
+            <input class="w-[20%] bg-[#FFD966] flex justify-center items-center rounded-full py-[2%] outline outline-offset-1 outline-[#FDD36A] text-xl font-medium" type="submit" name="number" value="9">
+
+            <input class="w-[20%] bg-[#FFD966] flex justify-center items-center rounded-full py-[2%] outline outline-offset-1 outline-[#FDD36A] text-xl font-medium" type="submit" name="operation" value="-">
+            
+            </div>
+            <!--4TH END  -->
+
+             <!-- 5TH START -->
+             <div class="absolute left-[3.3%] w-[89.2%] top-[80%] flex items-center justify-end">
+
+            <input class="mr-[5.5%] w-[20%] bg-[#FFD966] flex justify-center items-center rounded-full py-[2%] outline outline-offset-1 outline-[#FDD36A] text-xl font-medium" type="submit" name="number" value=".">
+
+            <input class="mr-[5%] w-[20%] bg-[#FFD966] flex justify-center items-center rounded-full py-[2%] outline outline-offset-1 outline-[#FDD36A] text-xl font-medium" type="submit" name="number" value="0">
+
+            <input class="w-[20%] bg-[#FFD966] flex justify-center items-center rounded-full py-[2%] outline outline-offset-1 outline-[#FDD36A] text-xl font-medium" type="submit" name="operation" value="+">
+
+            </div>
+            <!-- 5TH END -->
+
+    </div>
+    <!-- DIV CALCU END -->
+    </div>
+    <!-- CALCU END -->
+    </div>
+    <!-- MAIN CONTAINER END -->
+
+    
+</body>
+<!-- BODY END -->
+</html>
